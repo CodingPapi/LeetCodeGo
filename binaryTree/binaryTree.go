@@ -2,7 +2,6 @@ package binaryTree
 
 import (
 	ut "github.com/CodingPapi/LeetCodeGo/util"
-	"github.com/sqs/goreturns/returns"
 )
 
 // 124
@@ -146,7 +145,7 @@ func isValidBST(root *ut.TreeNode) bool {
 		return true
 	}
 
-	return checkBSTLeft(root.Left,root.Val) && checkBSTRight(root.Right, root.Val)
+	return checkBSTLeft(root.Left, root.Val, root.Val) && checkBSTRight(root.Right, root.Val, root.Val)
 }
 
 func checkBSTLeft(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
@@ -168,7 +167,7 @@ func checkBSTRight(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
 	if currNode == nil {
 		return true
 	}
-	if currNode.Val < lastVal {
+	if currNode.Val <= lastVal {
 		return false
 	}
 	if lastVal < rootVal && currNode.Val > rootVal{

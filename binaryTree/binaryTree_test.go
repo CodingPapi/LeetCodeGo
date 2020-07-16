@@ -248,9 +248,9 @@ func Test_isValidBST(t *testing.T) {
 		{
 			name: "basicTest1",
 			args: args {
-				btData: []int{2,1,3},
+				btData: []int{1,ut.NULL,1},
 			},
-			want: true,
+			want: false,
 		},
 		{
 			name: "basicTest2",
@@ -265,6 +265,13 @@ func Test_isValidBST(t *testing.T) {
 				btData: []int{5,1,7,ut.NULL,ut.NULL,3,8},
 			},
 			want: false,
+		},
+		{
+			name: "basicTest4",
+			args: args {
+				btData: []int{5,1,7,ut.NULL,ut.NULL,6,8},
+			},
+			want: true,
 		},
 	}
 	for _, tt := range tests {
