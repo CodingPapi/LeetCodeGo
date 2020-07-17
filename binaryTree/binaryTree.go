@@ -139,7 +139,7 @@ func zigzagLevelOrder(root *ut.TreeNode) [][]int {
 	return result
 }
 
-// 98
+// 98, slow
 func isValidBST(root *ut.TreeNode) bool {
 	if root == nil {
 		return true
@@ -191,34 +191,22 @@ func getMinOnRight(root *ut.TreeNode) (int, bool) {
 	return minResult, true
 }
 
-
-
-func checkBSTLeft(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
-	if currNode == nil {
-		return true
-	}
-	if currNode.Val >= lastVal {
-		return false
-	}
-	if lastVal > rootVal && currNode.Val < rootVal{
-		return false
-	}
-	leftCheck := checkBSTLeft(currNode.Left, currNode.Val, ut.MinInt(lastVal, rootVal))
-	rightCheck := checkBSTRight(currNode.Right, currNode.Val, ut.MaxInt(lastVal, rootVal))
-	return leftCheck && rightCheck
+// 98, fast
+func isValidBSTFast(root *ut.TreeNode) bool {
+	preVal := int(ut.MinInt32)
+	return checkBSTValue(root, &preVal)
 }
 
-func checkBSTRight(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
-	if currNode == nil {
+func checkBSTValue(root *ut.TreeNode, preVal *int) bool {
+	if root == nil {
 		return true
 	}
-	if currNode.Val <= lastVal {
+	if !checkBSTValue(root.Left, preVal) {
 		return false
 	}
-	if lastVal < rootVal && currNode.Val > rootVal{
+	if root.Val <= *preVal {
 		return false
 	}
-	leftCheck := checkBSTLeft(currNode.Left, currNode.Val, ut.MinInt(lastVal, rootVal))
-	rightCheck := checkBSTRight(currNode.Right, currNode.Val, ut.MaxInt(lastVal, rootVal))
-	return leftCheck && rightCheck
+	*preVal = root.Val
+	return checkBSTValue(root.Right, preVal)
 }

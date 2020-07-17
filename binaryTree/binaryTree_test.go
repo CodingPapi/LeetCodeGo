@@ -291,7 +291,7 @@ func Test_isValidBST(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			root := ut.BuildBinaryTree(tt.args.btData)
-			if got := isValidBST(root); got != tt.want{
+			if got := isValidBSTFast(root); got != tt.want{
 				t.Errorf("isValidBST = %v, want %v", got, tt.want)
 			}
 		})
