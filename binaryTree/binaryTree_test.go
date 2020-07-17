@@ -134,7 +134,7 @@ func Test_levelOrder(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			root := ut.BuildBinaryTree(tt.args.btData)
 			if got := levelOrder(root); !reflect.DeepEqual(got, tt.want){
-				t.Errorf("maxPathSum() = %v, want %v", got, tt.want)
+				t.Errorf("levelOrder() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -175,7 +175,7 @@ func Test_levelOrderBottom(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			root := ut.BuildBinaryTree(tt.args.btData)
 			if got := levelOrderBottom(root); !reflect.DeepEqual(got, tt.want){
-				t.Errorf("maxPathSum() = %v, want %v", got, tt.want)
+				t.Errorf("levelOrderBottom() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -216,7 +216,7 @@ func Test_zigzagLevelOrder(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			root := ut.BuildBinaryTree(tt.args.btData)
 			if got := zigzagLevelOrder(root); !reflect.DeepEqual(got, tt.want){
-				t.Errorf("maxPathSum() = %v, want %v", got, tt.want)
+				t.Errorf("zigzagLevelOrder() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -273,12 +273,26 @@ func Test_isValidBST(t *testing.T) {
 			},
 			want: true,
 		},
+		{
+			name: "basicTest5",
+			args: args {
+				btData: []int{3,1,5,0,2,4,6,ut.NULL,ut.NULL,ut.NULL,3},
+			},
+			want: false,
+		},
+		{
+			name: "basicTest6",
+			args: args {
+				btData: []int{3,ut.NULL,30,10,ut.NULL,ut.NULL,15,ut.NULL,45},
+			},
+			want: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			root := ut.BuildBinaryTree(tt.args.btData)
 			if got := isValidBST(root); got != tt.want{
-				t.Errorf("maxPathSum() = %v, want %v", got, tt.want)
+				t.Errorf("isValidBST = %v, want %v", got, tt.want)
 			}
 		})
 	}

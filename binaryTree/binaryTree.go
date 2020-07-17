@@ -145,8 +145,53 @@ func isValidBST(root *ut.TreeNode) bool {
 		return true
 	}
 
-	return checkBSTLeft(root.Left, root.Val, root.Val) && checkBSTRight(root.Right, root.Val, root.Val)
+	maxLeft, validLeft := getMaxOnLeft(root.Left)
+	minRight, validRight := getMinOnRight(root.Right)
+
+	if !validLeft || !validRight {
+		return false
+	}
+	if maxLeft >= root.Val || minRight <= root.Val {
+		return false
+	}
+	deepCheckLeft := isValidBST(root.Left)
+	deepCheckRight := isValidBST(root.Right)
+	return deepCheckLeft && deepCheckRight
 }
+
+func getMaxOnLeft(root *ut.TreeNode) (int, bool) {
+	if root == nil {
+		return ut.MinInt32, true
+	}
+	maxLeft, validLeft := getMaxOnLeft(root.Left)
+	maxRight, validRight := getMaxOnLeft(root.Right)
+	if !validLeft || !validRight {
+		return ut.MaxInt(maxLeft, maxRight), false
+	}
+	if maxLeft >= root.Val {
+		return maxLeft, false
+	}
+	maxResult := ut.MaxInt(ut.MaxInt(maxLeft, maxRight), root.Val)
+	return maxResult, true
+}
+
+func getMinOnRight(root *ut.TreeNode) (int, bool) {
+	if root == nil {
+		return ut.MaxInt32, true
+	}
+	minLeft, validLeft := getMinOnRight(root.Left)
+	minRight, validRight := getMinOnRight(root.Right)
+	if !validLeft || !validRight {
+		return ut.MinInt(minLeft, minRight), false
+	}
+	if minRight <= root.Val {
+		return minRight, false
+	}
+	minResult := ut.MinInt(ut.MinInt(minLeft, minRight), root.Val)
+	return minResult, true
+}
+
+
 
 func checkBSTLeft(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
 	if currNode == nil {
@@ -158,8 +203,8 @@ func checkBSTLeft(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
 	if lastVal > rootVal && currNode.Val < rootVal{
 		return false
 	}
-	leftCheck := checkBSTLeft(currNode.Left, currNode.Val, lastVal)
-	rightCheck := checkBSTRight(currNode.Right, currNode.Val, lastVal)
+	leftCheck := checkBSTLeft(currNode.Left, currNode.Val, ut.MinInt(lastVal, rootVal))
+	rightCheck := checkBSTRight(currNode.Right, currNode.Val, ut.MaxInt(lastVal, rootVal))
 	return leftCheck && rightCheck
 }
 
@@ -173,7 +218,7 @@ func checkBSTRight(currNode *ut.TreeNode, lastVal int, rootVal int) bool {
 	if lastVal < rootVal && currNode.Val > rootVal{
 		return false
 	}
-	leftCheck := checkBSTLeft(currNode.Left, currNode.Val, lastVal)
-	rightCheck := checkBSTRight(currNode.Right, currNode.Val, lastVal)
+	leftCheck := checkBSTLeft(currNode.Left, currNode.Val, ut.MinInt(lastVal, rootVal))
+	rightCheck := checkBSTRight(currNode.Right, currNode.Val, ut.MaxInt(lastVal, rootVal))
 	return leftCheck && rightCheck
 }
