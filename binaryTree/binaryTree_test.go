@@ -297,3 +297,49 @@ func Test_isValidBST(t *testing.T) {
 		})
 	}
 }
+
+func Test_insertIntoBst(t *testing.T) {
+	type args struct {
+		btData []int
+		target int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "nilTest",
+			args: args {
+				btData: []int{},
+				target: 1,
+			},
+			want: []int{1},
+		},
+		{
+			name: "basicTest",
+			args: args {
+				btData: []int{1,2,3},
+				target: 4,
+			},
+			want: []int{1,2,3,ut.NULL,ut.NULL,ut.NULL,4},
+		},
+		{
+			name: "basicTest",
+			args: args {
+				btData: []int{4,2,7,1,3},
+				target: 5,
+			},
+			want: []int{4,2,7,1,3,5},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			root := ut.BuildBinaryTree(tt.args.btData)
+			want := ut.BuildBinaryTree(tt.want)
+			if got := insertIntoBst(root, tt.args.target); !reflect.DeepEqual(got, want) {
+				t.Errorf("isValidBST = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

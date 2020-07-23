@@ -210,3 +210,30 @@ func checkBSTValue(root *ut.TreeNode, preVal *int) bool {
 	*preVal = root.Val
 	return checkBSTValue(root.Right, preVal)
 }
+
+// 701
+func insertIntoBst(root *ut.TreeNode, val int) *ut.TreeNode {
+	if root == nil {
+		return &ut.TreeNode{Val: val}
+	}
+	searchBinaryTree(root, val)
+	return root
+}
+
+func searchBinaryTree(root *ut.TreeNode, val int) {
+	var nextRoot *ut.TreeNode
+	if root.Val > val {
+		nextRoot = root.Left
+		if root.Left == nil {
+			root.Left = &ut.TreeNode{Val: val}
+			return
+		}
+	} else {
+		if root.Right == nil {
+			root.Right = &ut.TreeNode{Val: val}
+			return
+		}
+		nextRoot = root.Right
+	}
+	searchBinaryTree(nextRoot, val)
+}
