@@ -29,7 +29,6 @@ func BuildLinkList(input []int) *llist.ListNode {
 		temp = temp.Next
 	}
 	return result
-
 }
 
 func BuildBinaryTree(input []int) *TreeNode {
