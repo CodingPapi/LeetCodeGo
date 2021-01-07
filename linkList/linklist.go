@@ -1,31 +1,8 @@
 package linkList
 
 import (
-	// ut "github.com/CodingPapi/LeetCodeGo/util"
-	"strconv"
-	"strings"
+	. "github.com/CodingPapi/LeetCodeGo/util"
 )
-
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-func (l *ListNode) toString() string {
-	result := []string{}
-	if l == nil {
-		return strings.Join(result[:], "")
-	}
-
-	curNode := l.Next
-	result = append(result, strconv.Itoa(l.Val))
-
-	for curNode != nil {
-		result = append(result, strconv.Itoa(curNode.Val))
-		curNode = curNode.Next
-	}
-	return strings.Join(result[:], ",")
-}
 
 // 83
 func RemoveDuplicateFromSortedList(head *ListNode) *ListNode {
@@ -41,4 +18,28 @@ func RemoveDuplicateFromSortedList(head *ListNode) *ListNode {
 		}
 	}
 	return temp
+}
+
+// 82
+func RemoveDuplicateFromSortedListII(head *ListNode) *ListNode {
+	if head == nil {
+		return head
+	}
+	dumyHead := &ListNode{Val: -9999}
+	dumyHead.Next = head
+	head = dumyHead
+	for head.Next != nil && head.Next.Next != nil {
+		if head.Next.Val == head.Next.Next.Val {
+			dumyHead.Val = head.Next.Val
+			head.Next = head.Next.Next.Next
+		} else if head.Next.Val == dumyHead.Val {
+			head.Next = head.Next.Next
+		} else {
+			head = head.Next
+		}
+	}
+	if head.Next != nil && head.Next.Val == dumyHead.Val {
+		head.Next = head.Next.Next
+	}
+	return dumyHead.Next
 }

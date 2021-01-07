@@ -1,7 +1,8 @@
 package util
 
 import (
-	llist "github.com/CodingPapi/LeetCodeGo/linkList"
+	"strconv"
+	"strings"
 )
 
 const (
@@ -10,21 +11,42 @@ const (
 	MaxInt32 = 1<<31 - 1
 )
 
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
 }
 
-func BuildLinkList(input []int) *llist.ListNode {
+func (l *ListNode) ToString() string {
+	result := []string{}
+	if l == nil {
+		return strings.Join(result[:], "")
+	}
+
+	curNode := l.Next
+	result = append(result, strconv.Itoa(l.Val))
+
+	for curNode != nil {
+		result = append(result, strconv.Itoa(curNode.Val))
+		curNode = curNode.Next
+	}
+	return strings.Join(result[:], ",")
+}
+
+func BuildLinkList(input []int) *ListNode {
 	if len(input) == 0 {
 		return nil
 	}
-	result := &llist.ListNode{Val: input[0]}
+	result := &ListNode{Val: input[0]}
 	temp := result
 
 	for i := 1; i < len(input); i++ {
-		temp.Next = &llist.ListNode{Val: input[i]}
+		temp.Next = &ListNode{Val: input[i]}
 		temp.Next.Val = input[i]
 		temp = temp.Next
 	}

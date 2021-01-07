@@ -1,36 +1,13 @@
 package linkList
 
 import (
-	ut "github.com/CodingPapi/LeetCodeGo/util"
+	"reflect"
 	"testing"
+
+	. "github.com/CodingPapi/LeetCodeGo/util"
 )
 
-func TestListNode_toString(t *testing.T) {
-	type fields struct {
-		Val  int
-		Next *ListNode
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		want   string
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			l := &ListNode{
-				Val:  tt.fields.Val,
-				Next: tt.fields.Next,
-			}
-			if got := l.toString(); got != tt.want {
-				t.Errorf("ListNode.toString() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestListNode_RemoveDuplicateFromSortedList(t *testing.T) {
+func Test_RemoveDuplicateFromSortedList(t *testing.T) {
 	type args struct {
 		head []int
 	}
@@ -46,12 +23,102 @@ func TestListNode_RemoveDuplicateFromSortedList(t *testing.T) {
 			},
 			want: "1,2,3",
 		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{1, 2, 2, 3},
+			},
+			want: "1,2,3",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			l := ut.BuildLinkList(tt.args.head)
-			if got := RemoveDuplicateFromSortedList(l).toString(); got != tt.want {
+			l := BuildLinkList(tt.args.head)
+			if got := RemoveDuplicateFromSortedList(l).ToString(); got != tt.want {
 				t.Errorf("ListNode.toString() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_RemoveDuplicateFromSortedListII(t *testing.T) {
+	type args struct {
+		head []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 1, 2, 3},
+			},
+			want: "2,3",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{1, 2, 2, 3},
+			},
+			want: "1,3",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1, 2, 2, 2, 3},
+			},
+			want: "1,3",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1, 1, 1, 2, 2, 2, 3},
+			},
+			want: "3",
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{1, 1, 1, 1},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest4",
+			args: args{
+				head: []int{1, 1, 1},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest5",
+			args: args{
+				head: []int{0, 1, 2, 2, 3, 4},
+			},
+			want: "0,1,3,4",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := BuildLinkList(tt.args.head)
+			if got := RemoveDuplicateFromSortedListII(l).ToString(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("RemoveDuplicateFromSortedListII() = %v, want %v", got, tt.want)
 			}
 		})
 	}
