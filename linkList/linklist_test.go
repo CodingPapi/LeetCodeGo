@@ -123,3 +123,51 @@ func Test_RemoveDuplicateFromSortedListII(t *testing.T) {
 		})
 	}
 }
+
+func TestReverseList(t *testing.T) {
+	type args struct {
+		head []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+			},
+			want: "3,2,1",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{1, 2, 2, 3},
+			},
+			want: "3,2,2,1",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+			},
+			want: "1",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := BuildLinkList(tt.args.head)
+			if got := ReverseList(l).ToString(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ReverseList() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
