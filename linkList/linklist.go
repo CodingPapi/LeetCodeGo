@@ -60,41 +60,23 @@ func ReverseList(head *ListNode) *ListNode {
 
 // 92
 func ReverseListBetween(head *ListNode, m int, n int) *ListNode {
-	if head == nil {
-		return nil
+	if m == 1 {
+		return ReverseListPreN(head, n)
 	}
 
-	i := 1
-	backHead := head
-	premHead := head
-	prenHead := head
+	head.Next = ReverseListBetween(head.Next, m-1, n-1)
 
-	former := head
-	var cur *ListNode
+	return head
+}
 
-	var nHead *ListNode
-	var temp *ListNode
-	for head != nil {
-		if m == 1 {
-			prenHead = head
-		} else if i < m-1 {
-		} else if i == m-1 {
-			premHead = head
-			prenHead = head.Next
-
-			former = head.Next
-		} else if i > m-1 && i <= n {
-			temp = former.Next
-			former.Next = cur
-			cur = former
-			former = temp
-		} else if i == n && premHead != nil {
-			premHead.Next = cur
-			prenHead.Next = former
-		}
-		head = head.Next
-		i++
+func ReverseListPreN(head *ListNode, n int) *ListNode {
+	if head.Next == nil || n == 1 {
+		return head
 	}
 
-	return nil
+	result := ReverseListPreN(head.Next, n-1)
+	successor := head.Next.Next
+	head.Next.Next = head
+	head.Next = successor
+	return result
 }
