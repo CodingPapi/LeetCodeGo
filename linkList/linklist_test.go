@@ -229,3 +229,188 @@ func TestReverseListBetween(t *testing.T) {
 		})
 	}
 }
+
+func TestMergeTwoSortedLists(t *testing.T) {
+	type args struct {
+		l1 []int
+		l2 []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				l1: []int{1, 2, 3},
+				l2: []int{1, 2},
+			},
+			want: "1,1,2,2,3",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				l1: []int{},
+				l2: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				l1: []int{1},
+				l2: []int{},
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				l1: []int{},
+				l2: []int{1},
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				l1: []int{1, 2},
+				l2: []int{1, 2, 3},
+			},
+			want: "1,1,2,2,3",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ll1 := BuildLinkList(tt.args.l1)
+			ll2 := BuildLinkList(tt.args.l2)
+			if got := MergeTwoSortedLists(ll1, ll2).ToString(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MergeTwoSortedLists() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestMergeTwoSortedListsRecursion(t *testing.T) {
+	type args struct {
+		l1 []int
+		l2 []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				l1: []int{1, 2, 3},
+				l2: []int{1, 2},
+			},
+			want: "1,1,2,2,3",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				l1: []int{},
+				l2: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				l1: []int{1},
+				l2: []int{},
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				l1: []int{},
+				l2: []int{1},
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				l1: []int{1, 2},
+				l2: []int{1, 2, 3},
+			},
+			want: "1,1,2,2,3",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ll1 := BuildLinkList(tt.args.l1)
+			ll2 := BuildLinkList(tt.args.l2)
+			if got := MergeTwoSortedListsRecursion(ll1, ll2).ToString(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MergeTwoSortedLists() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestPartition(t *testing.T) {
+	type args struct {
+		l []int
+		x int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				l: []int{1, 2, 3},
+				x: 2,
+			},
+			want: "1,2,3",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				l: []int{},
+				x: 3,
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				l: []int{1},
+				x: 0,
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				l: []int{1},
+				x: 2,
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				l: []int{1, 2, 4, 8, 6, 1},
+				x: 4,
+			},
+			want: "1,2,1,4,8,6",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ll1 := BuildLinkList(tt.args.l)
+			if got := Partition(ll1, tt.args.x).ToString(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("MergeTwoSortedLists() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
