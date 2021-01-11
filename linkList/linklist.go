@@ -60,6 +60,10 @@ func ReverseList(head *ListNode) *ListNode {
 
 // 92
 func ReverseListBetween(head *ListNode, m int, n int) *ListNode {
+	if head == nil {
+		return head
+	}
+
 	if m == 1 {
 		return ReverseListPreN(head, n)
 	}
@@ -76,7 +80,9 @@ func ReverseListPreN(head *ListNode, n int) *ListNode {
 
 	result := ReverseListPreN(head.Next, n-1)
 	successor := head.Next.Next
-	head.Next.Next = head
+	if head.Next.Next != nil {
+		head.Next.Next = head
+	}
 	head.Next = successor
 	return result
 }
