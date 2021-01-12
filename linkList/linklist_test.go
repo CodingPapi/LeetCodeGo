@@ -414,3 +414,121 @@ func TestPartition(t *testing.T) {
 		})
 	}
 }
+
+func TestFindMiddleAndCut(t *testing.T) {
+	type args struct {
+		head []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+			},
+			want: []string{"1", "2,3"},
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{1, 2},
+			},
+			want: []string{"1", "2"},
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{},
+			},
+			want: []string{},
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+			},
+			want: []string{"1"},
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{1, 2, 4, 8, 6, 1},
+			},
+			want: []string{"1,2,4", "8,6,1"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			head := BuildLinkList(tt.args.head)
+			right := FindMiddleAndCut(head)
+			got := []string{}
+			if head != nil {
+				got = append(got, head.ToString())
+			}
+			if right != nil {
+				got = append(got, right.ToString())
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("FindMiddleAndCut() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSortList(t *testing.T) {
+	type args struct {
+		head []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+			},
+			want: "1,2,3",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{3, 2, 2, 1},
+			},
+			want: "1,2,2,3",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+			},
+			want: "1,2,3,4,6",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			head := BuildLinkList(tt.args.head)
+			if got := SortList(head).ToString(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SortList() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

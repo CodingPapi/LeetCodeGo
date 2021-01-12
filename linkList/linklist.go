@@ -172,21 +172,32 @@ func Partition(head *ListNode, x int) *ListNode {
 }
 
 //148
-func SortList(head *ListNode) *ListNode {
+func SortListRecursion(head *ListNode) *ListNode {
 
-	return nil
-}
-
-func findMiddle(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
+
+	tail := FindMiddleAndCut(head)
+
+	left := SortListRecursion(head)
+	right := SortListRecursion(tail)
+
+	result := MergeTwoSortedLists(left, right)
+	return result
+}
+
+func FindMiddleAndCut(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return nil
+	}
 	fast := head.Next.Next
 	slow := head
-	for fast.Next != nil {
+	for fast != nil && fast.Next != nil {
 		fast = fast.Next.Next
 		slow = slow.Next
 	}
-
-	return nil
+	temp := slow.Next
+	slow.Next = nil
+	return temp
 }
