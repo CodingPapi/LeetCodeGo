@@ -201,3 +201,71 @@ func FindMiddleAndCut(head *ListNode) *ListNode {
 	slow.Next = nil
 	return temp
 }
+
+//143
+func ReorderList(head *ListNode) {
+	if head == nil || head.Next == nil {
+		return
+	}
+	right := ReverseList(FindMiddleAndCut(head))
+
+	for head.Next != nil {
+		head.Next, right.Next, head, right = right, head.Next, head.Next, right.Next
+	}
+	head.Next = right
+}
+
+//141
+func HasCycle(head *ListNode) bool {
+	if head == nil || head.Next == nil {
+		return false
+	}
+	fast := head.Next.Next
+	slow := head.Next
+	for fast != nil && fast.Next != nil {
+		if fast == slow {
+			return true
+		}
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+	return false
+}
+
+//142
+func DetectCycle(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return nil
+	}
+	fast := head.Next.Next
+	slow := head.Next
+	for fast != nil && fast.Next != nil {
+		if fast == slow {
+			fast = head
+			for true {
+				if fast == slow {
+					return slow
+				}
+				fast = fast.Next
+				slow = slow.Next
+			}
+		}
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+	return nil
+}
+
+//234
+func IsPalindrome(head *ListNode) bool {
+	if head == nil {
+		return true
+	}
+	right := FindMiddleAndCut(head)
+	if head.Val != right.Val {
+		right = right.Next
+	}
+	for head != nil {
+	}
+	return true
+}

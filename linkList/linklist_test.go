@@ -516,7 +516,7 @@ func TestSortList(t *testing.T) {
 			want: "1",
 		},
 		{
-			name: "basicTest1",
+			name: "basicTest3",
 			args: args{
 				head: []int{3, 2, 6, 1, 4},
 			},
@@ -526,8 +526,286 @@ func TestSortList(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			head := BuildLinkList(tt.args.head)
-			if got := SortList(head).ToString(); !reflect.DeepEqual(got, tt.want) {
+			if got := SortListRecursion(head).ToString(); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SortList() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestReorderList(t *testing.T) {
+	type args struct {
+		head []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+			},
+			want: "1,3,2",
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+			},
+			want: "",
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{3, 2, 5, 1},
+			},
+			want: "3,1,2,5",
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+			},
+			want: "1",
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+			},
+			want: "3,4,2,1,6",
+		},
+		{
+			name: "basicTest4",
+			args: args{
+				head: []int{1, 2},
+			},
+			want: "1,2",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			head := BuildLinkList(tt.args.head)
+			if ReorderList(head); !reflect.DeepEqual(head.ToString(), tt.want) {
+				t.Errorf("SortList() = %v, want %v", head.ToString(), tt.want)
+			}
+		})
+	}
+}
+
+func TestHasCycle(t *testing.T) {
+	type args struct {
+		head []int
+		q    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+				q:    0,
+			},
+			want: true,
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+				q:    -1,
+			},
+			want: false,
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{3, 2, 5, 1},
+				q:    2,
+			},
+			want: true,
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+				q:    0,
+			},
+			want: true,
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+				q:    4,
+			},
+			want: true,
+		},
+		{
+			name: "basicTest4",
+			args: args{
+				head: []int{1, 2},
+				q:    -1,
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			head := BuildCycledLinkList(tt.args.head, tt.args.q)
+			if got := HasCycle(head); got != tt.want {
+				t.Errorf("HasCycle() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestDetectCycle(t *testing.T) {
+	type args struct {
+		head []int
+		q    int
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+				q:    0,
+			},
+			want: 1,
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+				q:    -1,
+			},
+			want: -1,
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{3, 2, 5, 1},
+				q:    2,
+			},
+			want: 5,
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+				q:    0,
+			},
+			want: 1,
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+				q:    4,
+			},
+			want: 4,
+		},
+		{
+			name: "basicTest4",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+				q:    3,
+			},
+			want: 1,
+		},
+		{
+			name: "basicTest5",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+				q:    2,
+			},
+			want: 6,
+		},
+		{
+			name: "basicTest6",
+			args: args{
+				head: []int{3, 2, 6, 1, 4},
+				q:    1,
+			},
+			want: 2,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			head := BuildCycledLinkList(tt.args.head, tt.args.q)
+			temp := DetectCycle(head)
+			var got int
+			if temp == nil {
+				got = -1
+			} else {
+				got = temp.Val
+			}
+			if got != tt.want {
+				t.Errorf("HasCycle() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestIsPalindrome(t *testing.T) {
+	type args struct {
+		head []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				head: []int{1, 2, 3},
+			},
+			want: false,
+		},
+		{
+			name: "basicTest0",
+			args: args{
+				head: []int{},
+			},
+			want: true,
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				head: []int{3, 2, 2, 3},
+			},
+			want: true,
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				head: []int{1},
+			},
+			want: true,
+		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{3, 2, 6, 2, 3},
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			head := BuildLinkList(tt.args.head)
+			if got := IsPalindrome(head); got != tt.want {
+				t.Errorf("IsPalindrome() = %v, want %v", got, tt.want)
 			}
 		})
 	}

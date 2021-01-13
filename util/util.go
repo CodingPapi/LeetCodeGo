@@ -53,6 +53,30 @@ func BuildLinkList(input []int) *ListNode {
 	return result
 }
 
+func BuildCycledLinkList(input []int, q int) *ListNode {
+	if len(input) == 0 {
+		return nil
+	}
+	var mark *ListNode
+	result := &ListNode{Val: input[0]}
+	temp := result
+	if q == 0 {
+		mark = result
+	}
+
+	for i := 1; i < len(input); i++ {
+		temp.Next = &ListNode{Val: input[i]}
+		temp.Next.Val = input[i]
+		if i == q {
+			mark = temp.Next
+		}
+		temp = temp.Next
+	}
+	temp.Next = mark
+
+	return result
+}
+
 func BuildBinaryTree(input []int) *TreeNode {
 	if len(input) == 0 {
 		return nil
