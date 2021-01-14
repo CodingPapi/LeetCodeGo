@@ -800,6 +800,13 @@ func TestIsPalindrome(t *testing.T) {
 			},
 			want: true,
 		},
+		{
+			name: "basicTest3",
+			args: args{
+				head: []int{3, 2, 2, 2, 3},
+			},
+			want: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

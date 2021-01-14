@@ -258,14 +258,26 @@ func DetectCycle(head *ListNode) *ListNode {
 
 //234
 func IsPalindrome(head *ListNode) bool {
-	if head == nil {
+	if head == nil || head.Next == nil {
 		return true
 	}
-	right := FindMiddleAndCut(head)
-	if head.Val != right.Val {
-		right = right.Next
+
+	fast := head
+	slow := head
+	var temp *ListNode
+	for fast != nil && fast.Next != nil {
+		slow, slow.Next, temp, fast = slow.Next, temp, slow, fast.Next.Next
 	}
-	for head != nil {
+
+	if fast != nil {
+		slow = slow.Next
+	}
+	for temp != nil {
+		if slow.Val != temp.Val {
+			return false
+		}
+		slow = slow.Next
+		temp = temp.Next
 	}
 	return true
 }
