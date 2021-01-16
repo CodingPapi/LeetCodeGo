@@ -281,3 +281,41 @@ func IsPalindrome(head *ListNode) bool {
 	}
 	return true
 }
+
+//138
+func CopyRandomList(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+	storeOri := make([]*Node, 0)
+	storeNew := make([]*Node, 0)
+
+	var preNew *Node
+
+	for i := 0; head != nil; i++ {
+		storeOri = append(storeOri, head)
+		storeNew = append(storeNew, &Node{Val: head.Val})
+		if preNew != nil {
+			preNew.Next = storeNew[i]
+		}
+		preNew = storeNew[i]
+		head = head.Next
+	}
+	preNew.Next = nil
+	head = storeOri[0]
+
+	for i := 0; head != nil; i++ {
+		if head.Random == nil {
+			storeNew[i].Random = nil
+			head = head.Next
+			continue
+		}
+		for index, node := range storeOri {
+			if node == head.Random {
+				storeNew[i].Random = storeNew[index]
+			}
+		}
+		head = head.Next
+	}
+	return storeNew[0]
+}

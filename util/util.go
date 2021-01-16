@@ -16,6 +16,12 @@ type ListNode struct {
 	Next *ListNode
 }
 
+type Node struct {
+	Val    int
+	Next   *Node
+	Random *Node
+}
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
