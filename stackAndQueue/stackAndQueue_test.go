@@ -1,7 +1,10 @@
 package stackAndQueue
 
 import (
+	"reflect"
 	"testing"
+
+	. "github.com/CodingPapi/LeetCodeGo/util"
 )
 
 func Test_RemoveDuplicateFromSortedList(t *testing.T) {
@@ -170,6 +173,47 @@ func TestDecodeString(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := DecodeString(tt.args.s); got != tt.want {
 				t.Errorf("DecodeString() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestInroderTraversal(t *testing.T) {
+	type args struct {
+		data []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				data: []int{1, 2, 3},
+			},
+			want: []int{2, 1, 3},
+		},
+		{
+			name: "basicTest2",
+			args: args{
+				data: []int{1, 2, 4, NULL, -6},
+			},
+			want: []int{2, -6, 1, 4},
+		},
+		{
+			name: "negativeTest",
+			args: args{
+				data: []int{-6},
+			},
+			want: []int{-6},
+		},
+	}
+	for _, tt := range tests {
+		root := BuildBinaryTree(tt.args.data)
+		t.Run(tt.name, func(t *testing.T) {
+			if got := InroderTraversal(root); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("InroderTraversal() = %v, want %v", got, tt.want)
 			}
 		})
 	}

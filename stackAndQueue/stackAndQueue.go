@@ -1,9 +1,9 @@
 package stackAndQueue
 
 import (
+	. "github.com/CodingPapi/LeetCodeGo/util"
 	"math"
 	"strconv"
-	// . "github.com/CodingPapi/LeetCodeGo/util"
 )
 
 //155
@@ -188,5 +188,18 @@ func DecodeString(s string) string {
 			result = top + result
 		}
 	}
+	return result
+}
+
+//94
+func InroderTraversal(root *TreeNode) []int {
+	if root == nil {
+		return []int{}
+	}
+	left := InroderTraversal(root.Left)
+	result := append(left, root.Val)
+	right := InroderTraversal(root.Right)
+	result = append(result, right...)
+
 	return result
 }
