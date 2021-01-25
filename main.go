@@ -6,11 +6,8 @@ import (
 
 func main() {
 	fmt.Println("Hello Wold!")
-	var nums = []int{1, 2, 3}
-	result := make([][]int, 0)
-	path := make([]int, 0)
-	backtrace2(nums, 0, path, &result)
-	fmt.Println(result)
+	nums := [][]int{}
+	fmt.Println(len(nums))
 }
 
 func backtrace(nums []int, currPos int, path []int, result *[][]int) {

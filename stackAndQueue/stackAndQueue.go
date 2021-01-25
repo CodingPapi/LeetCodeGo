@@ -203,3 +203,64 @@ func InroderTraversal(root *TreeNode) []int {
 
 	return result
 }
+
+//133
+var visitedNode map[*GraphNode]*GraphNode
+
+func CloneGraph(node *GraphNode) *GraphNode {
+	if visitedNode == nil {
+		visitedNode = make(map[*GraphNode]*GraphNode)
+	}
+	if node == nil {
+		return node
+	}
+	var newNode *GraphNode
+	if v, ok := visitedNode[node]; ok {
+		return v
+	} else {
+		newNode = &GraphNode{Val: node.Val, Neighbors: []*GraphNode{}}
+		visitedNode[node] = newNode
+		for _, neighbor := range node.Neighbors {
+			newNeighbor := CloneGraph(neighbor)
+			newNode.Neighbors = append(newNode.Neighbors, newNeighbor)
+		}
+	}
+
+	return newNode
+}
+
+//200
+type Island struct {
+	v byte
+	w byte
+	s byte
+	a byte
+	d byte
+}
+
+func NumIsLands(grid [][]byte) int {
+	h := len(grid)
+	if h == 0 {
+		return 0
+	}
+	mark := make([][]*Island, h)
+	w := len(grid[0])
+	for index := range mark {
+		mark[index] = make([]*Island, w)
+	}
+	for i := 0; i < h; i++ {
+		for j := 0; j < w; j++ {
+			mark[i][j] = &Island{v: grid[i][j]}
+			if j-1 >= 0 {
+				mark[i][j-1].d = grid[i][j]
+			}
+			if i-1 >= 0 {
+				mark[i-1][j].s = grid[i][j]
+			}
+		}
+	}
+	for _, x range mark {
+		for _, y range
+	}
+	return 0
+}

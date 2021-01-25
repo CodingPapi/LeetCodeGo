@@ -16,6 +16,11 @@ type ListNode struct {
 	Next *ListNode
 }
 
+type GraphNode struct {
+	Val       int
+	Neighbors []*GraphNode
+}
+
 type Node struct {
 	Val    int
 	Next   *Node
