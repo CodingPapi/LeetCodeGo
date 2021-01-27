@@ -218,3 +218,52 @@ func TestInroderTraversal(t *testing.T) {
 		})
 	}
 }
+
+func TestNumIsLands(t *testing.T) {
+	type args struct {
+		grid [][]byte
+	}
+	tests := []struct {
+		name string
+		args args
+		want int
+	}{
+		{
+			name: "basicTest",
+			args: args{
+				grid: [][]byte{{}},
+			},
+			want: 0,
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				grid: [][]byte{
+					{'1', '1', '1'},
+					{'0', '1', '0'},
+					{'1', '1', '1'},
+				},
+			},
+			want: 1,
+		},
+		{
+			name: "basicTest1",
+			args: args{
+				grid: [][]byte{
+					{'1', '1', '1', '1', '0'},
+					{'1', '1', '0', '1', '0'},
+					{'1', '1', '0', '0', '0'},
+					{'0', '0', '0', '0', '0'},
+				},
+			},
+			want: 1,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := NumIsLands(tt.args.grid); got != tt.want {
+				t.Errorf("NumIsLands() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
