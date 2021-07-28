@@ -1,4 +1,4 @@
-package strToInt
+package randomPick
 
 type Machine struct {
 	State  MState
@@ -30,6 +30,8 @@ func isDiget(r rune) bool {
 }
 
 func (machine *Machine) next(r rune) bool {
+	maxInt := (1 << 31) - 1
+	maxIntD10 := maxInt / 10
 	switch machine.State {
 	case Start, Space:
 		if isSpace(r) {
@@ -53,8 +55,20 @@ func (machine *Machine) next(r rune) bool {
 		}
 	case Symbol, Number:
 		if isDiget(r) {
+			if machine.Result > maxIntD10 {
+				if machine.Symbol > 0 {
+					machine.Result = maxInt
+				} else {
+					machine.Result = maxInt + 1
+				}
+			}
 			machine.State = Number
-			machine.Result = machine.Result*10 + int(r) - '0'
+			state, res := getProperResult(machine.Result*10+int(r)-'0', machine.Symbol, maxInt)
+			machine.Result = res
+			if !state {
+				machine.State = Exit
+				return false
+			}
 			return true
 		} else {
 			machine.State = Exit
@@ -64,6 +78,16 @@ func (machine *Machine) next(r rune) bool {
 		return false
 	}
 	return true
+}
+
+func getProperResult(re int, symbol int, max int) (reFlag bool, result int) {
+	if symbol > 0 && re > max {
+		return false, max
+	} else if symbol < 0 && re > max+1 {
+		return false, max + 1
+	} else {
+		return true, re
+	}
 }
 
 func myAtoi(s string) int {

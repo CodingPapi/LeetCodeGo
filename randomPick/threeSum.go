@@ -1,4 +1,4 @@
-package randomSelect
+package randomPick
 
 import (
 	"sort"

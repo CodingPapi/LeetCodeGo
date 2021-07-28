@@ -1,4 +1,4 @@
-package strToInt
+package randomPick
 
 import "testing"
 
@@ -13,13 +13,13 @@ func Test_myAtoi(t *testing.T) {
 	}{
 		{
 			name: "test1",
-			args: args{s: "   001"},
-			want: 1,
+			args: args{s: "2147483646"},
+			want: 2147483646,
 		},
 		{
 			name: "test2",
-			args: args{s: "  -001"},
-			want: -1,
+			args: args{s: "-91283472332"},
+			want: -2147483648,
 		},
 		{
 			name: "test3",
