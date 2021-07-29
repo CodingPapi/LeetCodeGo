@@ -10,44 +10,39 @@ func fourSum(nums []int, target int) [][]int {
 		return result
 	}
 	sort.Ints(nums)
-	for index, indexTail := 0, len(nums)-1; indexTail >= index+3; {
+	for index, first := range nums {
 		if index > 0 && nums[index-1] == nums[index] {
-			index++
 			continue
 		}
-		if indexTail < len(nums)-1 && nums[indexTail+1] == nums[indexTail] {
-			indexTail--
-			continue
-		}
-		neededSum := target - nums[index] - nums[indexTail]
-		lastSum := 0
-		for j, k := index+1, indexTail-1; j < k; {
-			if j > index+1 && nums[j] == nums[j-1] {
-				j++
+		for indexTail := len(nums) - 1; indexTail >= index+3; indexTail-- {
+			if indexTail < len(nums)-1 && nums[indexTail] == nums[indexTail+1] {
 				continue
 			}
-			if k < indexTail-1 && nums[k] == nums[k+1] {
-				k--
-				continue
+			neededSum := target - first - nums[indexTail]
+			for j, k := index+1, indexTail-1; j < k; {
+				if j > index+1 && nums[j] == nums[j-1] {
+					j++
+					continue
+				}
+				if k < indexTail-1 && nums[k] == nums[k+1] {
+					k--
+					continue
+				}
+				tempSum := nums[j] + nums[k]
+				if tempSum == neededSum {
+					result = append(result, []int{first, nums[j], nums[k], nums[indexTail]})
+					j++
+					k--
+					continue
+				} else if tempSum > neededSum {
+					k--
+					continue
+				} else {
+					j++
+					continue
+				}
 			}
-			lastSum = nums[j] + nums[k]
-			if lastSum == neededSum {
-				result = append(result, []int{nums[index], nums[j], nums[k], nums[indexTail]})
-				j++
-				k--
-				continue
-			} else if lastSum > neededSum {
-				k--
-				continue
-			} else {
-				j++
-				continue
-			}
-		}
-		if lastSum > neededSum {
-			indexTail--
-		} else {
-			index++
+
 		}
 	}
 	return result
